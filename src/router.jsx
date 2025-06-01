@@ -8,14 +8,15 @@ import NotFound from "./pages/NotFound";
 import { getUser, getUsers } from "./utilities/typicode";
 import Loading from "./Components/Loading";
 import Error from "./Components/Error";
+import { handleSubmit } from "./utilities/actions";
 
 
 const router = createBrowserRouter([
     {
         path: "/",
         element: <Layout />,
-        hydrateFallbackElement : <Loading />, // This will show a loading state while the data is being fetched
-       errorElement: <Error />, // This will show a NotFound component if there's an error
+        hydrateFallbackElement: <Loading />, // This will show a loading state while the data is being fetched
+        errorElement: <Error />, // This will show a NotFound component if there's an error
         children: [
             {
                 index: true,
@@ -33,12 +34,13 @@ const router = createBrowserRouter([
             },
             {
                 path: "contact",
-                element: <Contact />
+                element: <Contact />,
+                action: handleSubmit
             },
-            {   
-                path: "*",  
+            {
+                path: "*",
                 element: <NotFound />
-            } 
+            }
         ]
     }
 
