@@ -1,38 +1,20 @@
 import { useEffect, useState } from "react";
 import { Link, useLoaderData } from "react-router";
 import { useQuery } from "@tanstack/react-query";
-
+import { useAuth } from "../contexts/AuthContext";
 
 
 export default function List() {
+    const users = useLoaderData();
 
-const users = useLoaderData();
+    // her login context
+    const { token } = useAuth();
+
+    console.log(token);
+    // login slut
 
 
 
-
-    // const [usrs, setUsrs] = useState(null);
-    // const [isLoading, setIsLoading] = useState(true);
-
-    // const query = useQuery({
-    //     queryKey: ['users'],
-    //     queryFn: () => fetch("https://jsonplaceholder.typicode.com/users")
-    //         .then(response => response.json())
-    // });
-
-   
-    
-
-    // useEffect(() => {
-    //     fetch("https://jsonplaceholder.typicode.com/users")
-    //         .then(response => response.json())
-    //         .then(result => setUsrs(result))
-    //         .finally(() => setIsLoading(false))
-    // }, []);
-
-    // if(isLoading) {
-    //     return (<p>Loading...</p>)
-    // }
     return (
 
         <ul>
@@ -42,6 +24,6 @@ const users = useLoaderData();
                 </li>
             ))}
         </ul>
-        
+
     )
 }
