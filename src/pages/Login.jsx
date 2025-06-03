@@ -1,9 +1,19 @@
-import { Form } from "react-router"
+import { Form, useLocation, useNavigate } from "react-router"
 import { useAuth } from "../contexts/AuthContext"
+import { useState } from "react";
+
 
 export default function Login() {
+    const [error, setError] = useState();
+    const { login } = useAuth();
+    const location = useLocation();
+    const navigate = useNavigate();
 
-    const { login } = useAuth()
+    console.log(location);
+    const from = location.state?.from?.pathname || "/" // kan direct hvor som helst f.eks "/welcome"
+    console.log(from);
+
+
 
     async function handleLogin(event) {
         event.preventDefault();
@@ -23,13 +33,18 @@ export default function Login() {
             body: JSON.stringify(data)
         })
 
-        const userData = await response.json()
+        const userdata = await response.json()
 
-        login(userData.accessToken)
-
-        console.log(userData);
+        console.log(userdata);
 
 
+        if (!response.ok) {
+            setError(userdata.message || userdata.error || "Please provide login credentials")
+        } else {
+            login(userdata.accessToken)
+            navigate(from, { replace: true })
+
+        }
     }
 
     return (
@@ -42,6 +57,7 @@ export default function Login() {
                 <label htmlFor="password">Password</label>
                 <input type="password" name="password" id="password" />
             </div>
+            {error && (<div>{error}</div>)}
             <button type="submit">Log in</button>
         </Form>
     )

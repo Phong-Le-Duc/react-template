@@ -1,15 +1,13 @@
-import Navigation from './Components/Navigation'
+
 import { Outlet } from 'react-router'
+import Header from './Components/Header'
 
 function App() {
- 
+
 
   return (
     <>
-      <header>
-        <h1>My App</h1>
-        <Navigation />
-      </header>
+      <Header />
       <main>
         <Outlet />
       </main>

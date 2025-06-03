@@ -5,11 +5,12 @@ import List from "./pages/List";
 import Detail from "./pages/Detail";
 import Contact from "./pages/Contact";
 import NotFound from "./pages/NotFound";
-import { getUser, getUsers } from "./utilities/typicode";
+import { getUser, getUsers } from "./api/typicode";
 import Loading from "./Components/Loading";
 import Error from "./Components/Error";
-import { handleSubmit } from "./utilities/actions";
+import { handleSubmit } from "./api/actions";
 import Login from "./pages/Login";
+import RequireAuth from "./Components/RequireAuth";
 
 
 const router = createBrowserRouter([
@@ -25,12 +26,20 @@ const router = createBrowserRouter([
             },
             {
                 path: "list",
-                element: <List />,
+                element: (
+                    <RequireAuth>
+                        <List />
+                    </RequireAuth>
+                ),
                 loader: getUsers // This will fetch users data when the Home component is loaded
             },
             {
                 path: "list/:id",
-                element: <Detail />,
+                element: (
+                    <RequireAuth>
+                        <Detail />
+                    </RequireAuth>
+                ),
                 loader: getUser
             },
             {
